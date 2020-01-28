@@ -1,16 +1,14 @@
 import os
 import tensorflow as tf
-from model import define_model
-import config
-from generators import training_generator, validation_generator
-from utils import check_image_with_pil
+from model.model import define_model, config
+from model.utils import check_image_with_pil
 from PIL import ImageFile
 
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 # training_generator = training_generator(config.TRAINING_DATA_DIR)
 # validation_generator = validation_generator(config.VALIDATION_DATA_DIR)
-ckpt_path = os.path.join(config.PATH,'ckpt')
+ckpt_path = os.path.join(config.PATH, 'ckpt')
 
 
 def train(ckpt_path:str):
@@ -18,7 +16,7 @@ def train(ckpt_path:str):
     check_image_with_pil(config.VALIDATION_DATA_DIR)
     training_generator = training_generator(config.TRAINING_DATA_DIR)
     validation_generator = validation_generator(config.VALIDATION_DATA_DIR)
-    modelCheckpoint = tf.keras.callbacks.ModelCheckpoint(os.path.join(ckpt_path,config.MODEL_FILE_NAME), monitor='val_acc',
+    modelCheckpoint = tf.keras.callbacks.ModelCheckpoint(os.path.join(ckpt_path, config.MODEL_FILE_NAME), monitor='val_acc',
                                                          verbose=1, save_best_only=True, mode='max', period=10)
     model = define_model()
     model.fit_generator(training_generator, steps_per_epoch=len(training_generator.filenames) // BATCH_SIZE,

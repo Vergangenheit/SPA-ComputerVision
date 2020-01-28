@@ -1,13 +1,7 @@
-import tensorflow as tf
-from tf.keras.applications.vgg16 import preprocess_input
-from tf.keras.applications.vgg16 import decode_predictions
 from tf.keras.applications.vgg16 import VGG16
-from tf.keras.models import Model, Input, Sequential
-from tf.keras.layers import Activation, Dropout, Flatten, Dense, Conv2D, MaxPooling2D
-from tf.keras.optimizers import RMSprop, SGD, Adam
-from tf.keras import backend as K
-from tf.keras.preprocessing.image import img_to_array
-import config
+from tf.keras.models import Model
+from tf.keras.layers import Flatten, Dense
+from tf.keras.optimizers import SGD
 
 
 def define_model():
