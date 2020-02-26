@@ -12,8 +12,8 @@ ckpt_path = os.path.join(config.PATH, 'ckpt')
 
 
 def train(ckpt_path:str):
-    check_image_with_pil(config.TRAINING_DATA_DIR)
-    check_image_with_pil(config.VALIDATION_DATA_DIR)
+    #check_image_with_pil(config.TRAINING_DATA_DIR)
+    #check_image_with_pil(config.VALIDATION_DATA_DIR)
     training_generator = training_generator(config.TRAINING_DATA_DIR)
     validation_generator = validation_generator(config.VALIDATION_DATA_DIR)
     modelCheckpoint = tf.keras.callbacks.ModelCheckpoint(os.path.join(ckpt_path, config.MODEL_FILE_NAME), monitor='val_acc',

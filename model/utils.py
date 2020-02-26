@@ -1,5 +1,6 @@
 import os
 import shutil
+import pandas as pd
 
 from PIL import Image
 
@@ -8,17 +9,19 @@ def check_image_with_pil(path):
     for cls in os.listdir(path):
         print(cls, '\n')
         images = os.listdir(os.path.join(path, cls))
+        count = 0
         for image in images:
-            print(image)
+            #print(image)
             try:
                 Image.open(os.path.join(path, cls, image))
+                count += 1
             except IOError:
-                print(image, False)
+                #print(image, False)
                 os.remove(os.path.join(path, cls, image))
                 continue
             pass
 
-        print('\n')
+    print("percent of accessible images is {}".format(count/len(images)*100))
 
 
 class download_and_sort_images(object):
