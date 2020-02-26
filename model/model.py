@@ -21,6 +21,7 @@ def define_model():
 
     return model
 
+
 def define_model_lr_decay(epochs):
     model = VGG16(include_top=False, input_shape=(config.IMAGE_WIDTH, config.IMAGE_HEIGHT, 3))
     for layer in model.layers:
@@ -32,8 +33,7 @@ def define_model_lr_decay(epochs):
     # define new model
     model = Model(inputs=model.inputs, outputs=output)
     # compile model
-    opt = SGD(lr=0.001, momentum=0.9, decay=0.001/epochs)
+    opt = SGD(lr=0.001, momentum=0.9, decay=0.001 / epochs)
     model.compile(loss='categorical_crossentropy', metrics=['accuracy'], optimizer=opt)
 
     return model
-
