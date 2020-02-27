@@ -34,3 +34,21 @@ class StepDecay(LearningRateDecay):
 
         # return the learning rate
         return float(alpha)
+
+
+class PolinomialDecay(LearningRateDecay):
+
+    def __init__(self, maxEpochs=50, initAlpha=0.001, power=1.0):
+        # store the maximum number of epochs, base learning rate,
+        # and power of the polynomial
+        self.maxEpochs = maxEpochs
+        self.initAlpha = initAlpha
+        self.power = power
+
+    def __call__(self, epoch):
+        # compute the new learning rate based on polynomial decay
+        decay = (1 - (epoch / float(self.maxEpochs))) ** self.power
+        alpha = self.initAlpha * decay
+
+        # return the new learning rate
+        return float(alpha)
