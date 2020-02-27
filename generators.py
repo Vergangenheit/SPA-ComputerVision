@@ -1,5 +1,5 @@
 import tensorflow as tf
-from model.model import config
+import config
 import os
 
 
@@ -20,14 +20,14 @@ def training_generator(training_data_dir):
     return training_gen
 
 
-def validation_generator(validation_data_dir):
+def validation_generator(training_data_dir, validation_data_dir):
     validation_data_generator = tf.keras.preprocessing.image.ImageDataGenerator(rescale=1. / 255)
 
     validation_gen = validation_data_generator.flow_from_directory(
         validation_data_dir,
         target_size=(config.IMAGE_WIDTH, config.IMAGE_HEIGHT),
         batch_size=config.BATCH_SIZE,
-        classes=os.listdir(validation_data_dir))
+        classes=os.listdir(training_data_dir))
 
     return validation_gen
 

@@ -2,7 +2,7 @@ from tensorflow.keras.applications.vgg16 import VGG16
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Flatten, Dense
 from tensorflow.keras.optimizers import SGD
-from model import config
+import config
 
 
 def define_model():
