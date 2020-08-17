@@ -1,5 +1,5 @@
 import tensorflow as tf
-import config
+from configs import config
 import os
 
 

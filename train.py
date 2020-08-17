@@ -1,14 +1,10 @@
 import os
-import tensorflow as tf
 from tensorflow.keras.optimizers import SGD
 from tensorflow.keras.callbacks import LearningRateScheduler, ModelCheckpoint
 from PIL import ImageFile
-from model import define_model
-import generators
-import config
+from model import define_model, lr_scheduler, generators
+from configs import config
 import argparse
-import lr_scheduler
-import sys
 
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
@@ -41,25 +37,25 @@ def train(args):
     if args.lrs == 'stepdecay':
         schedule = lr_scheduler.StepDecay(initAlpha=0.001, factor=0.25, dropEvery=10)
         model.fit_generator(training_generator, steps_per_epoch=len(training_generator.filenames) // config.BATCH_SIZE,
-                             epochs=config.EPOCHS, validation_data=validation_generator,
-                             validation_steps=len(validation_generator.filenames) // config.BATCH_SIZE,
-                             callbacks=[modelCheckpoint, LearningRateScheduler(schedule)], verbose=2)
+                            epochs=config.EPOCHS, validation_data=validation_generator,
+                            validation_steps=len(validation_generator.filenames) // config.BATCH_SIZE,
+                            callbacks=[modelCheckpoint, LearningRateScheduler(schedule)], verbose=2)
 
     elif args.lrs == 'linear':
         linear_schedule = lr_scheduler.PolinomialDecay(maxEpochs=config.EPOCHS, initAlpha=0.001, power=1)
         model.fit_generator(training_generator,
-                                 steps_per_epoch=len(training_generator.filenames) // config.BATCH_SIZE,
-                                 epochs=config.EPOCHS, validation_data=validation_generator,
-                                 validation_steps=len(validation_generator.filenames) // config.BATCH_SIZE,
-                                 callbacks=[modelCheckpoint, LearningRateScheduler(linear_schedule)], verbose=2)
+                            steps_per_epoch=len(training_generator.filenames) // config.BATCH_SIZE,
+                            epochs=config.EPOCHS, validation_data=validation_generator,
+                            validation_steps=len(validation_generator.filenames) // config.BATCH_SIZE,
+                            callbacks=[modelCheckpoint, LearningRateScheduler(linear_schedule)], verbose=2)
 
     elif args.lrs == 'polinomial':
-        polinomial_schedule = PolinomialDecay(maxEpochs=config.EPOCHS, initAlpha=0.001, power=5)
+        polinomial_schedule = lr_scheduler.PolinomialDecay(maxEpochs=config.EPOCHS, initAlpha=0.001, power=5)
         model.fit_generator(training_generator,
-                                 steps_per_epoch=len(training_generator.filenames) // config.BATCH_SIZE,
-                                 epochs=config.EPOCHS, validation_data=validation_generator,
-                                 validation_steps=len(validation_generator.filenames) // config.BATCH_SIZE,
-                                 callbacks=[modelCheckpoint, LearningRateScheduler(polinomial_schedule)], verbose=2)
+                            steps_per_epoch=len(training_generator.filenames) // config.BATCH_SIZE,
+                            epochs=config.EPOCHS, validation_data=validation_generator,
+                            validation_steps=len(validation_generator.filenames) // config.BATCH_SIZE,
+                            callbacks=[modelCheckpoint, LearningRateScheduler(polinomial_schedule)], verbose=2)
 
 
 if __name__ == '__main__':

@@ -1,12 +1,11 @@
 import tensorflow as tf
-%matplotlib inline
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import numpy as np
 from random import shuffle
 import cv2
 import os
-import config
+from configs import config
 
 
 def load_model(saved_model: str):
