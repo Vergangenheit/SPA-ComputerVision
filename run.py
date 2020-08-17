@@ -21,9 +21,9 @@ def main():
     args = parser.parse_args()
 
     model = VGGSPA(CFG)
-    model.training_generator()
-    model.validation_generator()
-    model.test_generator()
+    model.train_generator()
+    model.valid_generator()
+    model.t_generator()
     model.build()
     model.train(args)
 

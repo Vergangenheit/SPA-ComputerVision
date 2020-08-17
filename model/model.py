@@ -25,7 +25,7 @@ class VGGSPA(BaseModel):
         self.validation_generator = None
         self.test_generator = None
 
-    def training_generator(self):
+    def train_generator(self):
         # Data augmentation
         training_data_generator = ImageDataGenerator(
             rescale=self.config.train.preprocess.rescale,
@@ -39,7 +39,7 @@ class VGGSPA(BaseModel):
             batch_size=self.batch_size,
             classes=os.listdir(self.config.data.path.train_path))
 
-    def validation_generator(self):
+    def valid_generator(self):
         validation_data_generator = ImageDataGenerator(rescale=self.config.train.preprocess.rescale)
 
         self.validation_generator = validation_data_generator.flow_from_directory(
@@ -48,7 +48,7 @@ class VGGSPA(BaseModel):
             batch_size=self.batch_size,
             classes=os.listdir(self.config.data.path.valid_path))
 
-    def test_generator(self):
+    def t_generator(self):
         test_data_generator = ImageDataGenerator(rescale=self.config.train.preprocess.rescale)
 
         self.test_generator = test_data_generator.flow_from_directory(self.config.data.path.test_path,
