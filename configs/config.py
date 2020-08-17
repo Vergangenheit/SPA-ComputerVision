@@ -34,10 +34,10 @@ CFG = {
             "momentum": 0.9
         },
         "preprocess": {
-        "rescale": 1./255.,
-        "shear_range": 0.1,
-        "zoom_range": 0.1,
-        "horizontal_flip": True
+            "rescale": 1. / 255,
+            "shear_range": 0.1,
+            "zoom_range": 0.1,
+            "horizontal_flip": True
         },
         "metrics": ["accuracy"],
         "loss": 'categorical_crossentropy',
@@ -49,14 +49,14 @@ CFG = {
     "model": {
         "input": [IMAGE_SIZE, IMAGE_SIZE, 3],
         "dense1": {
-            "units" : 128,
+            "units": 128,
             "activation": "relu",
             "kernel_initializer": "he_uniform"
         },
         "output": {
             "units": 6,
             "activation": "softmax"
-                   },
+        },
         "model_filename": MODEL_FILE_NAME
     }
 }
