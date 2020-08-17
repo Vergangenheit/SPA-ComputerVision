@@ -55,8 +55,9 @@ CFG = {
         },
         "output": {
             "units": 6,
-            "activation": "softmax"
-        },
-        "model_filename": MODEL_FILE_NAME
+            "activation": "softmax",
+            "model_filename": MODEL_FILE_NAME
+        }
+
     }
 }

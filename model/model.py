@@ -46,7 +46,7 @@ class VGGSPA(BaseModel):
             self.config.data.path.valid_path,
             target_size=(self.config.train.image_size, self.config.train.image_size),
             batch_size=self.batch_size,
-            classes=os.listdir(self.config.data.path.valid_path))
+            classes=os.listdir(self.config.data.path.train_path))
 
     def t_generator(self):
         test_data_generator = ImageDataGenerator(rescale=self.config.train.preprocess.rescale)
@@ -66,7 +66,7 @@ class VGGSPA(BaseModel):
                        kernel_initializer=self.config.model.dense1.kernel_initializer)(flatten1)
         output = Dense(self.config.model.output.units, activation=self.config.model.output.activation)(class1)
         # define new model
-        self.model = Model(input=self.base_model.inputs, outputs=output)
+        self.model = Model(inputs=self.base_model.inputs, outputs=output)
 
     def train(self, args):
         self.opt = SGD(lr=self.config.train.optimizer.lr, momentum=self.config.train.optimizer.momentum)

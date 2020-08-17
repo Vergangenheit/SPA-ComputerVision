@@ -3,9 +3,10 @@ from PIL import ImageFile
 from model.model import VGGSPA
 from configs.config import CFG
 import argparse
+import tensorflow as tf
 
 ImageFile.LOAD_TRUNCATED_IMAGES = True
-
+tf.get_logger().setLevel('WARNING')
 
 # training_generator = training_generator(config.TRAINING_DATA_DIR)
 # validation_generator = validation_generator(config.VALIDATION_DATA_DIR)
