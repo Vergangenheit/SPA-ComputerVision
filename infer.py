@@ -13,12 +13,14 @@ def load_model(saved_model: str):
 
     return model
 
+
 def extract_test_sample(samples=10):
     data = (os.listdir(config.TEST_DATA_DIR))
     shuffle(data)
     sample = data[:samples]
 
     return sample
+
 
 def predict_and_visualize(model, sample):
     for image in sample:
@@ -49,8 +51,3 @@ def predict_and_visualize(model, sample):
             plt.title("Image is %s but prediction is %.2f" % (image.split('_')[0], (preds[0][5]) * 100) + ' ' +
                       os.listdir(config.TRAINING_DATA_DIR)[5])
         plt.show()
-
-
-
-
-
