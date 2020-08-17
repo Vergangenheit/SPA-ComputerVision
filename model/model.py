@@ -72,7 +72,7 @@ class VGGSPA(BaseModel):
         self.opt = SGD(lr=self.config.train.optimizer.lr, momentum=self.config.train.optimizer.momentum)
         self.model.compile(loss=self.config.train.loss, metrics=self.config.train.metrics, optimizer=self.opt)
         modelCheckpoint = ModelCheckpoint(os.path.join(args.ckpt_path, self.config.model.output.model_filename),
-                                          monitor='val_acc',
+                                          monitor='val_accuracy',
                                           verbose=1, save_best_only=True, mode='max', period=10)
         if args.lrs == 'stepdecay':
             schedule = lr_scheduler.StepDecay(initAlpha=0.001, factor=0.25, dropEvery=10)
@@ -83,7 +83,8 @@ class VGGSPA(BaseModel):
                                          self.validation_generator.filenames) // self.batch_size,
                                      callbacks=[modelCheckpoint, LearningRateScheduler(schedule)],
                                      verbose=self.config.train.verbose)
-
+            if args.plot:
+                schedule.plot(self.epochs)
         elif args.lrs == 'linear':
             linear_schedule = lr_scheduler.PolinomialDecay(maxEpochs=self.epochs, initAlpha=0.001, power=1)
             model_history = self.model.fit_generator(self.training_generator, steps_per_epoch=len(
@@ -93,6 +94,8 @@ class VGGSPA(BaseModel):
                                          self.validation_generator.filenames) // self.batch_size,
                                      callbacks=[modelCheckpoint, LearningRateScheduler(linear_schedule)],
                                      verbose=self.config.train.verbose)
+            if args.plot:
+                linear_schedule.plot(self.epochs)
 
         elif args.lrs == 'polinomial':
             polinomial_schedule = lr_scheduler.PolinomialDecay(maxEpochs=self.epochs, initAlpha=0.001, power=5)
@@ -104,6 +107,8 @@ class VGGSPA(BaseModel):
                                                          self.validation_generator.filenames) // self.batch_size,
                                                      callbacks=[modelCheckpoint, LearningRateScheduler(polinomial_schedule)],
                                                      verbose=self.config.train.verbose)
+            if args.plot:
+                polinomial_schedule.plot(self.epochs)
 
         return model_history.history['loss'], model_history.history['val_loss']
 

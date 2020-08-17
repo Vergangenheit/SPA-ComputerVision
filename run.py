@@ -17,6 +17,7 @@ def main():
     parser = argparse.ArgumentParser()
     # parser.add_argument('--model', type=tf.keras.Model, default=model.define_model(), help='what type of model and ')
     parser.add_argument('--lrs', type=str, default=None, help='defines the learning rate scheduler')
+    parser.add_argument('--plot', type=bool, default=False, help='plots the learning rate at the end of training')
     parser.add_argument('--ckpt_path', type=str, default=os.path.join(CFG["data"]["path"]["path"], 'ckpt'),
                         help='where to save the trained models checkpoints')
     args = parser.parse_args()
