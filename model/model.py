@@ -26,6 +26,7 @@ class VGGSPA(BaseModel):
         self.test_generator = None
 
     def train_generator(self):
+        """Instantiate the generator object that feeds the train images to the train cycle"""
         # Data augmentation
         training_data_generator = ImageDataGenerator(
             rescale=self.config.train.preprocess.rescale,
@@ -40,6 +41,7 @@ class VGGSPA(BaseModel):
             classes=os.listdir(self.config.data.path.train_path))
 
     def valid_generator(self):
+        """Instantiates the generator object to feed the validation images to the train cycle"""
         validation_data_generator = ImageDataGenerator(rescale=self.config.train.preprocess.rescale)
 
         self.validation_generator = validation_data_generator.flow_from_directory(
@@ -49,6 +51,7 @@ class VGGSPA(BaseModel):
             classes=os.listdir(self.config.data.path.train_path))
 
     def t_generator(self):
+        """Instantiates the generator object that feeds the test images to the evaluate method"""
         test_data_generator = ImageDataGenerator(rescale=self.config.train.preprocess.rescale)
 
         self.test_generator = test_data_generator.flow_from_directory(self.config.data.path.test_path,
@@ -105,7 +108,8 @@ class VGGSPA(BaseModel):
                                                      epochs=self.epochs, validation_data=self.validation_generator,
                                                      validation_steps=len(
                                                          self.validation_generator.filenames) // self.batch_size,
-                                                     callbacks=[modelCheckpoint, LearningRateScheduler(polinomial_schedule)],
+                                                     callbacks=[modelCheckpoint,
+                                                                LearningRateScheduler(polinomial_schedule)],
                                                      verbose=self.config.train.verbose)
             if args.plot:
                 polinomial_schedule.plot(self.epochs)
